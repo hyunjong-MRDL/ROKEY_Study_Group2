@@ -1,3 +1,8 @@
+""" 2580번: 스도쿠 """
+# 문제 링크: https://www.acmicpc.net/problem/2580
+# 목적: 백트래킹을 이용한 스도쿠 풀이 알고리즘
+
+""" 풀이 시작 """
 from sys import stdin
 SIZE = 9
 
