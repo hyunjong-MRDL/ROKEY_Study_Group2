@@ -1,36 +1,17 @@
-#다익스트라 백준 1753
-import heapq
-import sys
-input = sys.stdin.readline
+n = int(input())
 
-# 1. 입력 및 초기화
-V, E = map(int, input().split())
-K = int(input())
-graph = [[] for _ in range(V + 1)]
-INF = sys.maxsize
-distance = [INF] * (V + 1)
+# 회의 정보를 담을 리스트
+array = []
+for _ in range(n):
+  # 시작 시간, 끝나는 시간, 회의 인원 입력
+  array.append(list(map(int, input().split())))
 
-# 2. 간선 입력
-for _ in range(E):
-    u, v, w = map(int, input().split())
-    graph[u].append((v, w))
+# 시작 시간 기준 오름차순 정렬
+array.sort()
 
-# 3. 다익스트라
-def dijkstra(start):
-    distance[start] = 0
-    heap = [(0, start)]
+dp = [0] * n
+dp[0] = array[0][2]
+for i in range(1, n):
+  dp[i] = max(dp[i - 1], dp[i - 2] + array[i][2])
 
-    while heap:
-        dist, now = heapq.heappop(heap)
-        if dist > distance[now]:
-            continue
-        for neighbor, weight in graph[now]:
-            cost = dist + weight
-            if cost < distance[neighbor]:
-                distance[neighbor] = cost
-                heapq.heappush(heap, (cost, neighbor))
-
-# 4. 실행 및 출력
-dijkstra(K)
-for i in range(1, V + 1):
-    print("INF" if distance[i] == INF else distance[i])
+print(dp[n - 1])
